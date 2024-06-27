@@ -8,7 +8,7 @@ class UserController {
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
             return res.json(userData)
        } catch (err) {
-            console.log(err)
+            next(err)
        } 
     }
 
@@ -16,7 +16,7 @@ class UserController {
         try {
 
         } catch (err) {
- 
+            next(err)
         } 
     }
 
@@ -24,15 +24,17 @@ class UserController {
         try {
 
         } catch (err) {
- 
+            next(err)
         } 
     }
 
     async activate(req, res, next) {
         try {
-
+            const activationLink = req.params.link
+            await userService.activate(activationLink)
+            return res.derirect(process.env.CLIENT_URL)
         } catch (err) {
- 
+            next(err)
         } 
     }
 
@@ -40,7 +42,7 @@ class UserController {
         try {
 
         } catch (err) {
- 
+            next(err)
         } 
     }
 
@@ -48,7 +50,7 @@ class UserController {
         try {
             res.json()
         } catch (err) {
- 
+            next(err)
         } 
     }
 }
